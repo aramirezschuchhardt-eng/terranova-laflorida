@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terranova La Florida · Avance Inmobiliario</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --naranja:#E86825;
+  --naranja-claro:#FF8C42;
+  --naranja-dark:#C4521A;
+  --blanco:#FFFFFF;
+  --hueso:#FAF8F5;
+  --gris-claro:#F0EDE8;
+  --gris-texto:#6B6560;
+  --negro:#1A1714;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--blanco);color:var(--negro);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(232,104,37,0.1);transition:box-shadow 0.3s}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;letter-spacing:0.1em;color:var(--negro);text-transform:uppercase}
+.nav-logo span{color:var(--naranja)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-wa{display:flex;align-items:center;gap:0.4rem;color:var(--gris-texto);font-size:0.78rem;text-decoration:none;transition:color 0.2s}
+.nav-wa:hover{color:#25D366}
+.nav-cta{background:var(--naranja);color:var(--blanco);border:none;padding:0.55rem 1.3rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border-radius:2px;text-decoration:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--naranja-dark)}
+
+/* HERO */
+.hero{min-height:100vh;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:#1a1714}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:0.55;display:block}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,23,20,0.95) 0%,rgba(26,23,20,0.5) 45%,rgba(26,23,20,0.15) 100%)}
+.hero-content{position:relative;z-index:2;padding:4rem 5rem 5rem;width:100%;max-width:900px}
+.hero-eyebrow{font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--naranja);margin-bottom:1.2rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,7vw,6rem);font-weight:300;line-height:1;color:var(--blanco);margin-bottom:1rem;opacity:0;animation:fadeUp 0.8s 0.4s forwards}
+.hero-title em{font-style:italic;color:var(--naranja-claro)}
+.hero-desc{font-size:1rem;color:rgba(255,255,255,0.6);line-height:1.7;max-width:520px;margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.8s 0.55s forwards}
+.hero-pills{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:3rem;opacity:0;animation:fadeUp 0.8s 0.7s forwards}
+.pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);backdrop-filter:blur(4px);padding:0.45rem 1rem;font-size:0.75rem;letter-spacing:0.04em;color:rgba(255,255,255,0.8);border-radius:40px}
+.pill strong{color:var(--naranja-claro);font-weight:500}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s 0.85s forwards}
+.btn-p{background:var(--naranja);color:var(--blanco);padding:0.95rem 2rem;font-size:0.85rem;font-weight:500;letter-spacing:0.07em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;text-decoration:none;display:inline-block;transition:background 0.2s,transform 0.15s}
+.btn-p:hover{background:var(--naranja-dark);transform:translateY(-2px)}
+.btn-s{background:transparent;color:var(--blanco);padding:0.95rem 2rem;font-size:0.85rem;font-weight:400;letter-spacing:0.07em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3);cursor:pointer;border-radius:2px;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:border-color 0.2s,transform 0.15s}
+.btn-s:hover{border-color:rgba(255,255,255,0.7);transform:translateY(-2px)}
+.hero-scroll{position:absolute;bottom:2rem;right:5rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeIn 1s 1.5s forwards}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--naranja));animation:scrollPulse 2s infinite}
+.scroll-text{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.4);writing-mode:vertical-rl}
+
+/* STRIP DE STATS */
+.stats-strip{background:var(--naranja);padding:1.5rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.stat-item{text-align:center}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--blanco);line-height:1}
+.stat-l{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-top:2px}
+.stat-div{width:1px;height:40px;background:rgba(255,255,255,0.25)}
+
+/* GALERÍA */
+.galeria{padding:5rem 5rem 3rem;background:var(--hueso)}
+.section-label{font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--naranja);margin-bottom:0.8rem}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:300;line-height:1.1;margin-bottom:2.5rem;color:var(--negro)}
+.galeria-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px;gap:8px}
+.galeria-item{overflow:hidden;border-radius:3px;cursor:pointer;position:relative}
+.galeria-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.galeria-item:hover img{transform:scale(1.05)}
+.galeria-item.tall{grid-row:span 2}
+.galeria-overlay{position:absolute;inset:0;background:rgba(26,23,20,0);transition:background 0.3s}
+.galeria-item:hover .galeria-overlay{background:rgba(26,23,20,0.2)}
+
+/* TIPOLOGÍAS */
+.tipologias{padding:5rem 5rem;background:var(--blanco)}
+.tipos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--gris-claro);border:1px solid var(--gris-claro);margin-top:2.5rem}
+.tipo-card{background:var(--blanco);padding:1.75rem 1.5rem;transition:transform 0.2s,box-shadow 0.2s;position:relative}
+.tipo-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(26,23,20,0.08);z-index:1}
+.tipo-card.featured{background:var(--negro)}
+.tipo-badge{display:inline-block;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;border-radius:2px;margin-bottom:1rem;background:rgba(232,104,37,0.1);color:var(--naranja)}
+.tipo-card.featured .tipo-badge{background:rgba(232,104,37,0.2);color:var(--naranja-claro)}
+.tipo-nombre{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:0.4rem}
+.tipo-card.featured .tipo-nombre{color:rgba(255,255,255,0.45)}
+.tipo-precio{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--naranja);line-height:1;margin-bottom:0.3rem}
+.tipo-sup{font-size:0.78rem;color:var(--gris-texto);margin-bottom:0.75rem}
+.tipo-card.featured .tipo-sup{color:rgba(255,255,255,0.5)}
+.tipo-detalle{font-size:0.75rem;color:var(--gris-texto);line-height:1.6;border-top:1px solid var(--gris-claro);padding-top:0.75rem}
+.tipo-card.featured .tipo-detalle{color:rgba(255,255,255,0.55);border-color:rgba(255,255,255,0.08)}
+.renta-tag{display:inline-block;background:var(--naranja);color:var(--blanco);font-size:0.65rem;letter-spacing:0.08em;padding:3px 8px;border-radius:2px;margin-top:0.6rem}
+
+/* AMENIDADES */
+.amenidades{background:var(--negro);padding:5rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.amenidades-left .section-label{color:var(--naranja-claro)}
+.amenidades-left .section-title{color:var(--blanco)}
+.amenidades-desc{font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:2.5rem}
+.amen-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.amen-item{display:flex;align-items:flex-start;gap:0.75rem}
+.amen-icon{width:38px;height:38px;border:1px solid rgba(232,104,37,0.25);border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem}
+.amen-name{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.85);margin-bottom:0.1rem}
+.amen-note{font-size:0.7rem;color:rgba(255,255,255,0.35)}
+.amenidades-right{position:relative}
+.amen-img-stack{position:relative;height:420px}
+.amen-img-main{position:absolute;inset:0;border-radius:4px;overflow:hidden}
+.amen-img-main img{width:100%;height:100%;object-fit:cover}
+.amen-img-float{position:absolute;bottom:-20px;left:-30px;width:200px;height:150px;border-radius:4px;overflow:hidden;border:4px solid var(--negro)}
+.amen-img-float img{width:100%;height:100%;object-fit:cover}
+.amen-badge-float{position:absolute;top:20px;right:-15px;background:var(--naranja);color:var(--blanco);padding:1rem 1.25rem;border-radius:3px;text-align:center}
+.amen-badge-n{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;line-height:1}
+.amen-badge-l{font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;opacity:0.85}
+
+/* PUNTOS DE INTERÉS */
+.puntos{background:var(--hueso);padding:5rem 5rem}
+.puntos-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;margin-top:2.5rem}
+.puntos-lista{display:flex;flex-direction:column;gap:0.5rem}
+.punto-categoria{margin-bottom:1.5rem}
+.punto-cat-label{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--naranja);margin-bottom:0.75rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(232,104,37,0.2)}
+.punto-item{display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+.punto-name{font-size:0.83rem;color:var(--negro);display:flex;align-items:center;gap:0.5rem}
+.punto-dot{width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0}
+.punto-dist{font-size:0.72rem;color:var(--gris-texto);background:rgba(232,104,37,0.08);padding:2px 8px;border-radius:20px}
+.mapa-container{border-radius:6px;overflow:hidden;box-shadow:0 8px 30px rgba(26,23,20,0.1)}
+.mapa-container iframe{width:100%;height:420px;border:none;display:block}
+
+/* ESPECIFICACIONES */
+.specs{padding:5rem 5rem;background:var(--blanco)}
+.specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem}
+.spec-card{border:1px solid var(--gris-claro);border-radius:4px;padding:1.5rem;transition:border-color 0.2s}
+.spec-card:hover{border-color:rgba(232,104,37,0.3)}
+.spec-icon{font-size:1.5rem;margin-bottom:0.75rem}
+.spec-title{font-size:0.85rem;font-weight:500;margin-bottom:0.5rem;color:var(--negro)}
+.spec-text{font-size:0.78rem;color:var(--gris-texto);line-height:1.7}
+
+/* INVERSIÓN HIGHLIGHT */
+.inversion{background:var(--negro);padding:5rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.inv-left .section-label{color:var(--naranja-claro)}
+.inv-left .section-title{color:var(--blanco);margin-bottom:1.5rem}
+.inv-left p{font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:2rem}
+.inv-items{display:flex;flex-direction:column;gap:1rem}
+.inv-item{display:flex;gap:1rem;align-items:flex-start}
+.inv-check{width:22px;height:22px;border-radius:50%;background:rgba(232,104,37,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--naranja);font-size:0.75rem;margin-top:1px}
+.inv-item-text{font-size:0.83rem;color:rgba(255,255,255,0.65);line-height:1.6}
+.inv-item-text strong{color:rgba(255,255,255,0.9);font-weight:500}
+.inv-right{display:flex;flex-direction:column;gap:1rem}
+.inv-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.inv-card.accent{background:var(--naranja);border-color:var(--naranja)}
+.inv-card-label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:0.3rem}
+.inv-card.accent .inv-card-label{color:rgba(255,255,255,0.75)}
+.inv-card-val{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:var(--blanco);line-height:1}
+
+/* FORMULARIO */
+.contacto{background:var(--hueso);padding:5rem}
+.contacto-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;max-width:1100px;margin:0 auto}
+.contacto-info .section-title{margin-bottom:1rem}
+.contacto-sub{font-size:0.88rem;color:var(--gris-texto);line-height:1.8;margin-bottom:2rem}
+.contacto-datos{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:2rem}
+.dato{display:flex;align-items:center;gap:0.75rem;font-size:0.83rem;color:var(--gris-texto)}
+.dato-icon{width:32px;height:32px;background:rgba(232,104,37,0.1);border-radius:2px;display:flex;align-items:center;justify-content:center;color:var(--naranja);font-size:0.9rem;flex-shrink:0}
+.wa-btn{display:inline-flex;align-items:center;gap:0.75rem;background:#25D366;color:var(--blanco);padding:0.9rem 1.75rem;border-radius:2px;text-decoration:none;font-size:0.83rem;font-weight:500;letter-spacing:0.04em;transition:opacity 0.2s,transform 0.15s}
+.wa-btn:hover{opacity:0.92;transform:translateY(-1px)}
+.form-card{background:var(--blanco);padding:2.5rem;border-radius:4px;box-shadow:0 4px 30px rgba(26,23,20,0.07)}
+.form-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;margin-bottom:0.3rem}
+.form-sub{font-size:0.78rem;color:var(--gris-texto);margin-bottom:1.75rem}
+.form-group{margin-bottom:1.1rem}
+.form-group label{display:block;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gris-texto);margin-bottom:0.35rem}
+.form-group input,.form-group select{width:100%;padding:0.75rem 1rem;border:1px solid #E0DDD8;background:var(--hueso);font-family:'DM Sans',sans-serif;font-size:0.875rem;color:var(--negro);border-radius:2px;outline:none;transition:border-color 0.2s}
+.form-group input:focus,.form-group select:focus{border-color:var(--naranja)}
+.form-group select{appearance:none;cursor:pointer}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem}
+.form-submit{width:100%;background:var(--naranja);color:var(--blanco);border:none;padding:1rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;margin-top:0.4rem;transition:background 0.2s}
+.form-submit:hover{background:var(--naranja-dark)}
+.form-disc{font-size:0.68rem;color:var(--gris-texto);margin-top:0.6rem;text-align:center;line-height:1.5}
+.form-success{display:none;text-align:center;padding:2.5rem 1rem}
+.success-check{width:56px;height:56px;background:rgba(232,104,37,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;color:var(--naranja);font-size:1.4rem}
+.form-success h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;margin-bottom:0.5rem}
+.form-success p{font-size:0.83rem;color:var(--gris-texto)}
+
+/* FOOTER */
+footer{background:var(--negro);padding:2.5rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,0.05)}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--blanco);letter-spacing:0.1em;text-transform:uppercase}
+.footer-logo span{color:var(--naranja)}
+.footer-links{display:flex;gap:2rem}
+.footer-links a{font-size:0.75rem;color:rgba(255,255,255,0.35);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.footer-links a:hover{color:var(--naranja)}
+.footer-copy{font-size:0.72rem;color:rgba(255,255,255,0.2)}
+
+/* ANIMACIONES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.6)}50%{opacity:1;transform:scaleY(1)}}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero-content{padding:4rem 2rem 4rem}
+  .stats-strip{padding:1.5rem 2rem;gap:1.5rem}
+  .stat-div{display:none}
+  .galeria,.tipologias,.amenidades,.puntos,.specs,.inversion,.contacto{padding:4rem 2rem}
+  .galeria-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .galeria-item.tall{grid-row:span 1}
+  .tipos-grid{grid-template-columns:1fr 1fr}
+  .amenidades,.inversion,.contacto-inner{grid-template-columns:1fr;gap:3rem}
+  .puntos-grid{grid-template-columns:1fr}
+  .specs-grid{grid-template-columns:1fr 1fr}
+  .amen-img-stack{height:300px}
+  footer{padding:2rem}
+  .footer-links{display:none}
+  nav{padding:1rem 1.5rem}
+}
+@media(max-width:600px){
+  .tipos-grid{grid-template-columns:1fr}
+  .specs-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero-title{font-size:3rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AVANCE <span>INMOBILIARIO</span></div>
+  <div class="nav-right">
+    <a href="https://wa.me/56930386399?text=Hola%2C%20me%20interesa%20Terranova%20La%20Florida" target="_blank" class="nav-wa">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <a href="#contacto" class="nav-cta">Cotizar ahora</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0000_DZ7_0474-1.jpg" alt="Terranova La Florida">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Avance Inmobiliario · La Florida, Santiago</p>
+    <h1 class="hero-title">Terranova<br><em>La Florida</em></h1>
+    <p class="hero-desc">Dos torres residenciales en el corazón de La Florida. Entrega inmediata. Estudio, 1 y 2 dormitorios con vistas a toda la ciudad.</p>
+    <div class="hero-pills">
+      <span class="pill">Desde <strong>UF 2.465</strong></span>
+      <span class="pill">Reserva <strong>$100.000</strong></span>
+      <span class="pill">Bono pie <strong>hasta 20%</strong></span>
+      <span class="pill"><strong>25 pisos</strong> disponibles</span>
+      <span class="pill">Arriendo garantizado <strong>$750.000/mes</strong></span>
+    </div>
+    <div class="hero-btns">
+      <a href="#contacto" class="btn-p">Quiero cotizar</a>
+      <a href="https://wa.me/56930386399?text=Hola%2C%20me%20interesa%20Terranova%20La%20Florida%2C%20%C2%BFpueden%20enviarme%20informaci%C3%B3n%3F" target="_blank" class="btn-s">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp directo
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-text">Explorar</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item"><div class="stat-n">25</div><div class="stat-l">Pisos</div></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><div class="stat-n">29–60</div><div class="stat-l">m² disponibles</div></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><div class="stat-n">UF 2.465</div><div class="stat-l">Precio desde</div></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><div class="stat-n">$100K</div><div class="stat-l">Reserva</div></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><div class="stat-n">Inmediata</div><div class="stat-l">Entrega</div></div>
+  <div class="stat-div"></div>
+  <div class="stat-item"><div class="stat-n">20%</div><div class="stat-l">Bono pie máx.</div></div>
+</div>
+
+<!-- GALERÍA -->
+<section class="galeria" id="galeria">
+  <p class="section-label">Galería</p>
+  <h2 class="section-title">Conoce Terranova<br>por dentro y por fuera</h2>
+  <div class="galeria-grid">
+    <div class="galeria-item tall">
+      <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0000_DZ7_0474-1.jpg" alt="Fachada Terranova">
+      <div class="galeria-overlay"></div>
+    </div>
+    <div class="galeria-item">
+      <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0005_D81_7945.jpg" alt="Interior">
+      <div class="galeria-overlay"></div>
+    </div>
+    <div class="galeria-item">
+      <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0010_DZ7_0288.jpg" alt="Dormitorio">
+      <div class="galeria-overlay"></div>
+    </div>
+    <div class="galeria-item">
+      <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0009_D81_7895.jpg" alt="Cocina">
+      <div class="galeria-overlay"></div>
+    </div>
+    <div class="galeria-item">
+      <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0008_DZ7_0235.jpg" alt="Living">
+      <div class="galeria-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOLOGÍAS -->
+<section class="tipologias" id="tipologias">
+  <p class="section-label">Tipologías y precios</p>
+  <h2 class="section-title">Encuentra el departamento<br>que se ajusta a ti</h2>
+  <div class="tipos-grid">
+    <div class="tipo-card">
+      <span class="tipo-badge">Estudio</span>
+      <p class="tipo-nombre">Desde 29 m²</p>
+      <p class="tipo-precio">UF 2.465</p>
+      <p class="tipo-sup">29 – 29,5 m²</p>
+      <p class="tipo-detalle">Diseño compacto e inteligente. Ideal primera inversión o vivir solo.</p>
+      <span class="renta-tag">Bono pie 15%</span>
+    </div>
+    <div class="tipo-card">
+      <span class="tipo-badge">1 Dormitorio · 1 Baño</span>
+      <p class="tipo-nombre">Desde 38 m²</p>
+      <p class="tipo-precio">UF 2.920</p>
+      <p class="tipo-sup">38,4 – 41,4 m²</p>
+      <p class="tipo-detalle">Amplitud y confort para vivir o invertir. Múltiples plantas disponibles.</p>
+      <span class="renta-tag">Bono pie 15%</span>
+    </div>
+    <div class="tipo-card">
+      <span class="tipo-badge">2 Dorm. · 1 Baño</span>
+      <p class="tipo-nombre">Desde 42 m²</p>
+      <p class="tipo-precio">UF 3.130</p>
+      <p class="tipo-sup">41,8 – 50,1 m²</p>
+      <p class="tipo-detalle">Perfecto para familia o pareja. Excelente relación precio-superficie.</p>
+      <span class="renta-tag">Bono pie 15%</span>
+    </div>
+    <div class="tipo-card featured">
+      <span class="tipo-badge">⭐ 2 Dorm. · 2 Baños</span>
+      <p class="tipo-nombre">Desde 56 m²</p>
+      <p class="tipo-precio">UF 3.560</p>
+      <p class="tipo-sup">56,2 – 59,9 m²</p>
+      <p class="tipo-detalle">La mejor opción para invertir. Arriendo garantizado $750.000/mes por 2 años. Sin vacancia, cobras desde el día 1.</p>
+      <span class="renta-tag">Bono pie 20% · Renta garantizada</span>
+    </div>
+  </div>
+</section>
+
+<!-- AMENIDADES -->
+<section class="amenidades" id="amenidades">
+  <div class="amenidades-left">
+    <p class="section-label">Espacios comunes</p>
+    <h2 class="section-title">Todo lo que necesitas<br>en tu edificio</h2>
+    <p class="amenidades-desc">Terranova fue diseñado para que disfrutes cada día sin salir del edificio. Espacios pensados para el descanso, el trabajo y la comunidad.</p>
+    <div class="amen-grid">
+      <div class="amen-item">
+        <div class="amen-icon">🏋️</div>
+        <div><p class="amen-name">Gimnasio</p><p class="amen-note">Máquinas de última generación</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">💻</div>
+        <div><p class="amen-name">Salón Co-Work</p><p class="amen-note">Trabaja desde casa con estilo</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">🎉</div>
+        <div><p class="amen-name">Sala Multiuso</p><p class="amen-note">Para reuniones y eventos</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">🧺</div>
+        <div><p class="amen-name">Sala de Lavado</p><p class="amen-note">Lavado y secado en el edificio</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">🐾</div>
+        <div><p class="amen-name">Zona Mascotas</p><p class="amen-note">Entrega 2ª etapa</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">🔥</div>
+        <div><p class="amen-name">Quincho</p><p class="amen-note">Entrega 2ª etapa</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">🏊</div>
+        <div><p class="amen-name">Piscina</p><p class="amen-note">Entrega 2ª etapa</p></div>
+      </div>
+      <div class="amen-item">
+        <div class="amen-icon">👶</div>
+        <div><p class="amen-name">Juegos Infantiles</p><p class="amen-note">Zona segura para niños</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="amenidades-right">
+    <div class="amen-img-stack">
+      <div class="amen-img-main">
+        <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0007_DZ7_0280.jpg" alt="Espacios comunes">
+      </div>
+      <div class="amen-img-float">
+        <img src="https://www.vidanueva.cl/wp-content/uploads/2025/07/tn-_0003_DZ7_0207.jpg" alt="Interior departamento">
+      </div>
+      <div class="amen-badge-float">
+        <div class="amen-badge-n">8+</div>
+        <div class="amen-badge-l">Amenidades</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUNTOS DE INTERÉS -->
+<section class="puntos" id="ubicacion">
+  <p class="section-label">Ubicación privilegiada</p>
+  <h2 class="section-title">Todo cerca.<br>Todo conectado.</h2>
+  <div class="puntos-grid">
+    <div class="puntos-lista">
+      <div class="punto-categoria">
+        <p class="punto-cat-label">🚇 Transporte</p>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Metro Vicente Valdés (L4)</span><span class="punto-dist">~3 min caminando</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Paradero Transantiago</span><span class="punto-dist">a pasos</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Acceso Autopista Vespucio</span><span class="punto-dist">~5 min en auto</span></div>
+      </div>
+      <div class="punto-categoria">
+        <p class="punto-cat-label">🛒 Comercio y servicios</p>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Mall Plaza Vespucio</span><span class="punto-dist">~10 min</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Supermercado Jumbo / Lider</span><span class="punto-dist">~5 min</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Bancos y farmacias</span><span class="punto-dist">a pasos</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Restaurantes y cafés</span><span class="punto-dist">en el barrio</span></div>
+      </div>
+      <div class="punto-categoria">
+        <p class="punto-cat-label">🏥 Salud y educación</p>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Clínica Indisa / Sanatorio</span><span class="punto-dist">~10 min</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Hospital La Florida</span><span class="punto-dist">~8 min</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Colegios y universidades</span><span class="punto-dist">en la zona</span></div>
+      </div>
+      <div class="punto-categoria">
+        <p class="punto-cat-label">🌿 Entorno</p>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Parque Padre Hurtado</span><span class="punto-dist">~5 min</span></div>
+        <div class="punto-item"><span class="punto-name"><span class="punto-dot"></span>Áreas verdes Vicuña Mackenna</span><span class="punto-dist">al frente</span></div>
+      </div>
+    </div>
+    <div class="mapa-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.0!2d-70.598!3d-33.538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d01e2b6b1e0f%3A0x1!2sVicu%C3%B1a+Mackenna+7637%2C+La+Florida%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses!2scl!4v1"
+        allowfullscreen loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ESPECIFICACIONES -->
+<section class="specs" id="specs">
+  <p class="section-label">Terminaciones y calidad</p>
+  <h2 class="section-title">Materiales de alto estándar<br>en cada detalle</h2>
+  <div class="specs-grid">
+    <div class="spec-card">
+      <div class="spec-icon">🍳</div>
+      <h4 class="spec-title">Cocina equipada</h4>
+      <p class="spec-text">Cubierta de granito, encimera vitrocerámica, campana extractora, horno eléctrico y muebles con enchape melamina.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-icon">🛁</div>
+      <h4 class="spec-title">Baños de calidad</h4>
+      <p class="spec-text">Mueble vanitorio, cerámica blanca en muros, piso cerámico, grifería monomando y WC con descarga a muro.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-icon">🪟</div>
+      <h4 class="spec-title">Ventanas termopanel</h4>
+      <p class="spec-text">Marcos de aluminio con termopanel en todos los departamentos. Mayor aislación térmica y acústica.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-icon">✨</div>
+      <h4 class="spec-title">Pisos porcelanato</h4>
+      <p class="spec-text">Gres porcelánico de alta durabilidad en toda la superficie habitable. Elegante y fácil de mantener.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-icon">🚪</div>
+      <h4 class="spec-title">Puertas de calidad</h4>
+      <p class="spec-text">Puerta exterior sólida de aglomerado pintada. Puertas interiores pintadas tipo Beagle Doors o similar.</p>
+    </div>
+    <div class="spec-card">
+      <div class="spec-icon">🏗️</div>
+      <h4 class="spec-title">Construcción sólida</h4>
+      <p class="spec-text">Más de 25 años de experiencia VidaNueva. Dos torres residenciales, pisos del 1 al 25, stock amplio disponible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INVERSIÓN -->
+<section class="inversion" id="inversion">
+  <div class="inv-left">
+    <p class="section-label">¿Por qué invertir?</p>
+    <h2 class="section-title">Tu departamento<br>se paga solo</h2>
+    <p>El modelo 2D-2B con arriendo garantizado de Terranova es una de las oportunidades de inversión más sólidas del mercado inmobiliario en La Florida hoy.</p>
+    <div class="inv-items">
+      <div class="inv-item">
+        <div class="inv-check">✓</div>
+        <p class="inv-item-text"><strong>Sin buscar arrendatario.</strong> El arriendo está garantizado desde el día que recibes las llaves.</p>
+      </div>
+      <div class="inv-item">
+        <div class="inv-check">✓</div>
+        <p class="inv-item-text"><strong>Sin vacancia.</strong> 2 años de renta asegurada sobre el valor de mercado.</p>
+      </div>
+      <div class="inv-item">
+        <div class="inv-check">✓</div>
+        <p class="inv-item-text"><strong>~5% de caprate anual.</strong> Muy por encima del rendimiento bancario.</p>
+      </div>
+      <div class="inv-item">
+        <div class="inv-check">✓</div>
+        <p class="inv-item-text"><strong>Bono pie hasta 20%.</strong> Menos capital propio en la firma.</p>
+      </div>
+      <div class="inv-item">
+        <div class="inv-check">✓</div>
+        <p class="inv-item-text"><strong>La Florida en alza.</strong> Una de las comunas con mayor plusvalía y demanda de arriendo de Santiago.</p>
+      </div>
+    </div>
+  </div>
+  <div class="inv-right">
+    <div class="inv-card accent">
+      <div><p class="inv-card-label">Arriendo garantizado / mes</p><p class="inv-card-val">$750.000</p></div>
+      <span style="font-size:2rem">🏠</span>
+    </div>
+    <div class="inv-card">
+      <div><p class="inv-card-label">Duración garantía</p><p class="inv-card-val">2 años</p></div>
+      <span style="font-size:2rem">📅</span>
+    </div>
+    <div class="inv-card">
+      <div><p class="inv-card-label">Caprate anual estimado</p><p class="inv-card-val">~5%</p></div>
+      <span style="font-size:2rem">📈</span>
+    </div>
+    <div class="inv-card">
+      <div><p class="inv-card-label">Reserva para asegurar unidad</p><p class="inv-card-val">$100.000</p></div>
+      <span style="font-size:2rem">🔐</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="contacto" id="contacto">
+  <div class="contacto-inner">
+    <div class="contacto-info">
+      <p class="section-label">Contacto</p>
+      <h2 class="section-title">¿Te interesa?<br>Hablemos hoy.</h2>
+      <p class="contacto-sub">Completa el formulario o escríbenos directo por WhatsApp. Te enviamos la simulación, disponibilidad de stock y más información sin compromiso.</p>
+      <div class="contacto-datos">
+        <div class="dato"><div class="dato-icon">📍</div><span>La Florida, Santiago — Entrega inmediata</span></div>
+        <div class="dato"><div class="dato-icon">🏢</div><span>Avance Inmobiliario</span></div>
+        <div class="dato"><div class="dato-icon">⏰</div><span>Lunes a domingo de 10:00 a 20:00 hrs</span></div>
+      </div>
+      <a href="https://wa.me/56930386399?text=Hola%2C%20me%20interesa%20Terranova%20La%20Florida.%20%C2%BFPueden%20enviarme%20m%C3%A1s%20informaci%C3%B3n%3F" target="_blank" class="wa-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Escribir por WhatsApp
+      </a>
+    </div>
+    <div>
+      <div class="form-card" id="form-card">
+        <h3 class="form-title">Quiero más información</h3>
+        <p class="form-sub">Un ejecutivo te contacta en menos de 24 horas</p>
+        <div id="form-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" id="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="telefono" placeholder="+56 9 XXXX XXXX" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="tucorreo@email.com">
+          </div>
+          <div class="form-group">
+            <label>Me interesa</label>
+            <select id="interes">
+              <option value="">¿Primera vivienda o inversión?</option>
+              <option>Primera vivienda</option>
+              <option>Inversión con arriendo garantizado</option>
+              <option>Estudio o 1 dormitorio</option>
+              <option>2 dormitorios</option>
+              <option>Aún estoy evaluando</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>¿Cómo supiste de Terranova?</label>
+            <select id="origen">
+              <option value="">Selecciona</option>
+              <option>Google</option>
+              <option>Instagram / Facebook</option>
+              <option>Recomendación</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <button class="form-submit" onclick="enviarFormulario()">Quiero que me contacten →</button>
+          <p class="form-disc">Tus datos son confidenciales. Sin spam ni llamadas no solicitadas.</p>
+        </div>
+        <div class="form-success" id="form-success">
+          <div class="success-check">✓</div>
+          <h3>¡Listo, te contactamos pronto!</h3>
+          <p>Un ejecutivo de Avance Inmobiliario se pondrá en contacto contigo en las próximas horas con toda la información de Terranova La Florida.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AVANCE <span>INMOBILIARIO</span></div>
+  <div class="footer-links">
+    <a href="#galeria">Galería</a>
+    <a href="#tipologias">Tipologías</a>
+    <a href="#amenidades">Amenidades</a>
+    <a href="#ubicacion">Ubicación</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <p class="footer-copy">© 2025 Avance Inmobiliario · La Florida, Santiago</p>
+</footer>
+
+<script>
+function enviarFormulario(){
+  const nombre=document.getElementById('nombre').value.trim();
+  const telefono=document.getElementById('telefono').value.trim();
+  if(!nombre||!telefono){alert('Por favor ingresa tu nombre y teléfono.');return;}
+  const interes=document.getElementById('interes').value||'No especificado';
+  const email=document.getElementById('email').value||'No indicado';
+  const origen=document.getElementById('origen').value||'No indicado';
+  const msg=`Hola%2C+llego+desde+la+landing+de+Terranova+La+Florida.%0ANombre%3A+${encodeURIComponent(nombre)}%0ATel%C3%A9fono%3A+${encodeURIComponent(telefono)}%0AEmail%3A+${encodeURIComponent(email)}%0AInter%C3%A9s%3A+${encodeURIComponent(interes)}%0AC%C3%B3mo+nos+encontr%C3%B3%3A+${encodeURIComponent(origen)}`;
+  window.open(`https://wa.me/56930386399?text=${msg}`,'_blank');
+  document.getElementById('form-body').style.display='none';
+  document.getElementById('form-success').style.display='block';
+}
+</script>
+</body>
+</html>
